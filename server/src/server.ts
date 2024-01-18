@@ -14,6 +14,11 @@ const io = new Server(server, {
 
 io.on('connection', socket => {
   console.log('New user connected ', socket.id)
+
+  socket.on('message', msg => {
+    console.log(msg)
+    socket.emit('message', { msg: `Hello I'm from Server ${socket.id}` })
+  })
 })
 
 async function bootstrap() {

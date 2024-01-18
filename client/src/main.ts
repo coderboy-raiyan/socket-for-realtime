@@ -1,10 +1,13 @@
 import { io } from "socket.io-client";
-const mainEle = document.querySelector<HTMLDivElement>("#app");
+const mainEle = document.querySelector("#app") as HTMLDivElement;
 
 const socket = io("http://localhost:5000");
 
-mainEle!.innerHTML = `<h1>Hello Socket</h1>`;
+mainEle.innerHTML = `<h1>Hello Socket</h1>`;
 
 socket.on("connect", () => {
-  console.log(socket.id);
+  socket.emit("message", { msg: `Hello I'm client ${socket.id}` });
+  socket.on("message", (msg) => {
+    console.log(msg);
+  });
 });
